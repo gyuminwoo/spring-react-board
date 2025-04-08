@@ -5,6 +5,11 @@ import CreatePost from "./CreatePost";
 import PostDetail from "./PostDetail";
 import PostEdit from "./PostEdit";
 
+// / - 投稿リストページ
+// /create - 投稿作成ページ
+// /post/:id - 投稿詳細ページ
+// /post/edit/:id - 投稿修正ページ
+
 function App() {
   return (
     <Router>
@@ -21,7 +26,3 @@ function App() {
 }
 
 export default App;
-
-// / - 投稿リスト
-// /create - 投稿作成
-// /edit/:id - 投稿修正　(idは投稿の番号）
