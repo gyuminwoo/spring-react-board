@@ -5,6 +5,8 @@ import CreatePost from "./CreatePost";
 import PostDetail from "./PostDetail";
 import PostEdit from "./PostEdit";
 
+// React Routerによるルーティング設定
+
 // / - 投稿リストページ
 // /create - 投稿作成ページ
 // /post/:id - 投稿詳細ページ
