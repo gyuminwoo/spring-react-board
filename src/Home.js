@@ -46,7 +46,7 @@ let Home = () => {
                 }
             </div>
 
-//　　　　　　ページネーション
+    　　　　 {/* ページネーション */}
             <div className={"pagination"}>
                 {
                     pageNumbers.map(number=>(
@@ -60,7 +60,7 @@ let Home = () => {
                 }
             </div>
 
-//          投稿作成ページへのリンク
+            {/* 投稿作成ページへのリンク */}
             <Link to={"/create"} className={"create-link"}>게시글 작성</Link>
         </div>
     );

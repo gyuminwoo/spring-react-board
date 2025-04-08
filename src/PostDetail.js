@@ -21,7 +21,7 @@ let PostDetail = () => {
         <div className={"post-detail-container"}>
             <h1 className={"post-detail-title"}>{post.title}</h1>
             <p className={"post-detail-content"}>{post.content}</p>
-//          編集・削除ボタン
+            {/* 編集・削除ボタン */}
             <div className={"button-group"}>
                 <Link to={`/post/edit/${id}`} className={"edit-button"}>
                     수정하기
@@ -31,7 +31,7 @@ let PostDetail = () => {
                 </button>
             </div>
 
-//          一覧ページに戻るリンク
+            {/* 一覧ページに戻るリンク */}
             <Link to={"/"} className={"back-link"}>
                 목록으로 돌아가기
             </Link>
