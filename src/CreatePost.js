@@ -5,11 +5,13 @@ import axios from "axios";
 // 投稿作成ページコンポーネント
 let CreatePost = ()=>{
 
+//  タイトルと内容を保持する状態
     let [formData, setFormData] = useState({
         title: '',
         content: ''
     });
 
+//  入力欄の変更を検知し、状態を更新する関数
     let onChangeFormData = (e) => {
         setFormData({
             ...formData,
@@ -17,6 +19,7 @@ let CreatePost = ()=>{
         });
     };
 
+//  投稿ボタンを押した時にバックエンドにPOSTリクエストを送信する
     const onClickSubmit = () => {
         axios.post(`${process.env.REACT_APP_API_URL}/posts`, formData).then(res => {
             console.log(res.data);
