@@ -1,16 +1,32 @@
+import {useState, useEffect, useCallback} from "react";
 import {Link, useParams} from "react-router-dom";
 import "./css/detail.css";
+import axios from "axios";
 
 //　投稿詳細ページコンポーネント
 let PostDetail = () => {
     const {id} = useParams();　//　URLパラメータ取得
 
-//  投稿詳細データ
-    const post = {
-        id,
-        title: `${id}번째 게시글`,
-        content: `${id}번째 게시글의 상세 내용!`
-    };
+    let [post, setPost] = useState({
+        title: "",
+        content: ""
+    });
+
+//  投稿詳細データ取得（依存配列にidが含まれているため、id変更時にも再実行される
+    const getPost = useCallback(() => {
+        axios.get(`${process.env.REACT_APP_API_URL}/posts/${id}`)
+            .then(res => {
+                console.log(res.data);
+                setPost(res.data);
+            }).catch(err => {
+                console.error(err);
+            });
+    }, [id]);
+
+//　初回マウント時およびidが変わった時に投稿詳細を取得
+    useEffect(() => {
+        getPost();
+    }, [getPost]);
 
 //  削除ボタンを押下時の処理
     const handleDelete = () => {
