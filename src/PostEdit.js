@@ -1,6 +1,7 @@
 import {Link, useNavigate, useParams} from "react-router-dom";
 import {useState, useEffect} from "react";
 import "./css/edit.css";
+import axios from "axios";
 
 //　投稿編集ページコンポーネント
 let PostEdit = ()=>{
@@ -8,20 +9,44 @@ let PostEdit = ()=>{
     const navigate = useNavigate();
 
 //  入力値の状態管理
-    let [title, setTitle] = useState("");
-    let [content, setContent] = useState("");
+    let [post, setPost] = useState({
+        title: "",
+        content: ""
+    })
 
 //　初期データ設定（ダミー）
     useEffect(()=>{
-        setTitle(`${id} 번째 게시글 제목`);
-        setContent(`${id} 번째 게시글 상세 내용입니다.`);
+        axios.get(`${process.env.REACT_APP_API_URL}/posts/${id}`)
+            .then(res => {
+                console.log(res.data);
+                setPost(res.data);
+            }).catch(err => {
+                console.error(err);
+                alert("게시글 불러오는데 실패하였습니다.");
+            })
     }, [id]);
+
+    const handleOnChange = (e) => {
+        const {name, value} = e.target;
+        setPost({
+            ...post,
+            [name]: value
+        })
+    }
 
 //  フォーム送信時の処理
     const handleSubmit = (e)=>{
         e.preventDefault(); // ページリロードを防止（SPAのため）
-        alert("게시글이 수정되었습니다.");
-        navigate(`/post/${id}`);　//　編集後、詳細ページへ移動
+
+        axios.put(`${process.env.REACT_APP_API_URL}/posts/${id}`, post)
+            .then(res => {
+                console.log(res.data);
+                alert("게시글이 수정되었습니다.");
+                navigate(`/post/${id}`);　//　編集後、詳細ページへ移動
+            }).catch(err => {
+                console.error(err);
+                alert("게시글 수정에 실패하였습니다.");
+            });
     }
 
     return (
@@ -32,13 +57,13 @@ let PostEdit = ()=>{
                 {/* タイトル入力欄 */}
                 <div className={"form-group"}>
                     <label htmlFor={"title"}>제목</label>
-                    <input id={"title"} type={"text"} value={title} onChange={(e) => setTitle(e.target.value)} placeholder={"제목을 입력하세요."}/>
+                    <input id={"title"} type={"text"} value={post.title} name={"title"} onChange={handleOnChange} placeholder={"제목을 입력하세요."}/>
                 </div>
 
                 {/* コンテンツ入力欄 */}
                 <div className={"form-group"}>
                     <label htmlFor={"content"}>내용</label>
-                    <textarea id={"content"} value={content} onChange={(e) => setContent(e.target.value)} placeholder={"내용을 입력하세요."}/>
+                    <textarea id={"content"} value={post.content} name={"content"} onChange={handleOnChange} placeholder={"내용을 입력하세요."}/>
                 </div>
 
                 {/* アクションボタン */}
