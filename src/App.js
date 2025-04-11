@@ -4,6 +4,7 @@ import Home from "./Home";
 import CreatePost from "./CreatePost";
 import PostDetail from "./PostDetail";
 import PostEdit from "./PostEdit";
+import Header from "./Header";
 
 // React Routerによるルーティング設定
 
@@ -16,6 +17,7 @@ function App() {
   return (
     <Router>
         <div className="App">
+            <Header />
             <Routes>
                 <Route path={"/"} element={<Home/>} />
                 <Route path={"/create"} element={<CreatePost/>} />

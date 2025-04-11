@@ -1,0 +1,28 @@
+.header-container {
+  padding: 16px;
+  background-color: #f9f9f9;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.nav {
+  display: flex;
+  gap: 12px;
+}
+
+.nav-btn {
+  background: none;
+  border: 1px solid #007BFF;
+  padding: 6px 12px;
+  border-radius: 4px;
+  color: #007BFF;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.nav-btn:hover {
+  background-color: #007BFF;
+  color: white;
+}
