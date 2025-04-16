@@ -2,6 +2,7 @@ import {useCallback, useState, useEffect} from "react";
 import {Link} from "react-router-dom";
 import "./css/list.css";
 import axios from "axios";
+import useAuthStore from "./store/useAuthStore";
 
 // 投稿一覧ページコンポーネント
 let Home = () => {
@@ -10,6 +11,9 @@ let Home = () => {
     const [totalPages, setTotalPages] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
     const postsPerPage = 10;
+
+    const token = useAuthStore((state) => state.token);
+    const isLoggedIn = !!token;
 
 //  現在のページに基づいて投稿リストを取得するAPIコール
     const getPostList = useCallback(() =>{
@@ -72,8 +76,12 @@ let Home = () => {
                 }
             </div>
 
-            {/* 投稿作成ページへのリンク */}
-            <Link to={"/create"} className={"create-link"}>게시글 작성</Link>
+            {
+                isLoggedIn && (
+                    // ログイン状態のみ投稿作成リンクを表示
+                    <Link to={"/create"} className={"create-link"}>게시글 작성</Link>
+                )
+            }
         </div>
     );
 }
