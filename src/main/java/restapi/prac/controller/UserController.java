@@ -1,5 +1,6 @@
 package restapi.prac.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +22,7 @@ public class UserController {
 
 //  会員登録
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@RequestBody UserRegisterRequestDto requestDto) {
+    public ResponseEntity<?> registerUser(@Valid @RequestBody UserRegisterRequestDto requestDto) {
         try {
             User user = userService.registerUser(requestDto);
             UserResponseDto responseDto = UserMapper.toDto(user);
