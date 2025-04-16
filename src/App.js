@@ -5,6 +5,7 @@ import CreatePost from "./CreatePost";
 import PostDetail from "./PostDetail";
 import PostEdit from "./PostEdit";
 import Header from "./Header";
+import Signup from "./Signup";
 
 // React Routerによるルーティング設定
 
@@ -23,6 +24,7 @@ function App() {
                 <Route path={"/create"} element={<CreatePost/>} />
                 <Route path={"/post/:id"} element={<PostDetail/>} />
                 <Route path={"/post/edit/:id"} element={<PostEdit/>} />
+                <Route path={"/signup"} element={<Signup />} />
             </Routes>
         </div>
     </Router>
