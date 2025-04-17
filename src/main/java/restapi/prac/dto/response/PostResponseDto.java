@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@Builder
 public class PostResponseDto {
     private Long id;
     private String title;
