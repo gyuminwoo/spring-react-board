@@ -1,14 +1,16 @@
 package restapi.prac.model;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Post {
 
     @Id
@@ -23,7 +25,7 @@ public class Post {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private User user; // 投稿者表示のため
+    private User user;
 
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
