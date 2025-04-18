@@ -57,6 +57,9 @@ let Home = () => {
                             <p className={"post-content"}>
                                 {post.content}
                             </p>
+                            <p className={"post-author"}>
+                                작성자: {post.authorName}
+                            </p>
                         </div>
                     ))
                 }

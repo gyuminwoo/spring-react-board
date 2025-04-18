@@ -2,11 +2,13 @@ import {Link, useNavigate, useParams} from "react-router-dom";
 import {useState, useEffect} from "react";
 import "./css/edit.css";
 import axios from "axios";
+import useAuthStore from "./store/useAuthStore";
 
 //　投稿編集ページコンポーネント
 let PostEdit = ()=>{
     const {id} = useParams();　//　URLパラメータ取得
     const navigate = useNavigate();
+    const token = useAuthStore((state) => state.token);
 
 //  入力値の状態管理
     let [post, setPost] = useState({
@@ -19,7 +21,10 @@ let PostEdit = ()=>{
         axios.get(`${process.env.REACT_APP_API_URL}/posts/${id}`)
             .then(res => {
                 console.log(res.data);
-                setPost(res.data);
+                setPost({
+                    title: res.data.title,
+                    content: res.data.content
+                });
             }).catch(err => {
                 console.error(err);
                 alert("게시글 불러오는데 실패하였습니다.");
@@ -38,7 +43,11 @@ let PostEdit = ()=>{
     const handleSubmit = (e)=>{
         e.preventDefault(); // ページリロードを防止（SPAのため）
 
-        axios.put(`${process.env.REACT_APP_API_URL}/posts/${id}`, post)
+        axios.put(`${process.env.REACT_APP_API_URL}/posts/${id}`, post, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
             .then(res => {
                 console.log(res.data);
                 alert("게시글이 수정되었습니다.");

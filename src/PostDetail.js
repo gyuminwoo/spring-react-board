@@ -2,6 +2,7 @@ import {useState, useEffect, useCallback} from "react";
 import {Link, useParams, useNavigate} from "react-router-dom";
 import "./css/detail.css";
 import axios from "axios";
+import useAuthStore from "./store/useAuthStore";
 
 //　投稿詳細ページコンポーネント
 let PostDetail = () => {
@@ -11,8 +12,12 @@ let PostDetail = () => {
 
     let [post, setPost] = useState({
         title: "",
-        content: ""
+        content: "",
+        authorName: ""
     });
+
+    const token = useAuthStore((state) => state.token);
+    const userId = useAuthStore((state) => state.user?.id);
 
 //  投稿詳細データ取得（依存配列にidが含まれているため、id変更時にも再実行される
     const getPost = useCallback(() => {
@@ -36,7 +41,11 @@ let PostDetail = () => {
             return;
         }
 
-        axios.delete(`${process.env.REACT_APP_API_URL}/posts/${id}`)
+        axios.delete(`${process.env.REACT_APP_API_URL}/posts/${id}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
             .then(res => {
                 console.log(res.data);
                 alert("삭제가 완료되었습니다.");
@@ -51,15 +60,23 @@ let PostDetail = () => {
         <div className={"post-detail-container"}>
             <h1 className={"post-detail-title"}>{post.title}</h1>
             <p className={"post-detail-content"}>{post.content}</p>
+            <p className={"post-detail-meta"}>작성자: {post.authorName}</p>
+
+
+
             {/* 編集・削除ボタン */}
-            <div className={"button-group"}>
-                <Link to={`/post/edit/${id}`} className={"edit-button"}>
-                    수정하기
-                </Link>
-                <button onClick={handleDelete} className={"delete-button"}>
-                    삭제하기
-                </button>
-            </div>
+            {
+                token && Number(userId) === Number(post.userId) && (
+                    <div className={"button-group"}>
+                        <Link to={`/post/edit/${id}`} className={"edit-button"}>
+                            수정하기
+                        </Link>
+                        <button onClick={handleDelete} className={"delete-button"}>
+                            삭제하기
+                        </button>
+                    </div>
+                )
+            }
 
             {/* 一覧ページに戻るリンク */}
             <Link to={"/"} className={"back-link"}>

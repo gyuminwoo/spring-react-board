@@ -19,9 +19,16 @@ const Login = () => {
         e.preventDefault();
         try {
             const res = await axios.post(`${process.env.REACT_APP_API_URL}/auth/login`, formData);
-            const { token, user } = res.data;
+            const { token, id, username, name } = res.data;
 
-            setAuth({ token, user }); // Zustandでグローバル状態に保存
+            setAuth({
+                token,
+                user: {
+                    id,
+                    username,
+                    name
+                }
+            }); // Zustandでグローバル状態に保存
             navigate('/');
         } catch(err) {
             console.error(err);
