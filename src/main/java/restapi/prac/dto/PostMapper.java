@@ -12,6 +12,7 @@ public class PostMapper {
                 .title(post.getTitle())
                 .content(post.getContent())
                 .authorName(post.getUser().getName())
+                .userId(post.getUser().getId())
                 .createdAt(post.getCreatedAt())
                 .updatedAt(post.getUpdatedAt())
                 .build();

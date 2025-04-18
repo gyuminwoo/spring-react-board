@@ -2,7 +2,9 @@ package restapi.prac.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import restapi.prac.dto.PostMapper;
@@ -23,7 +25,12 @@ public class PostService {
     private final UserRepository userRepository;
 
     public Page<Post> getPosts(Pageable pageable) {
-        return postRepository.findAll(pageable);
+        Pageable sortedByCreatedAtDesc = PageRequest.of(
+            pageable.getPageNumber(),
+            pageable.getPageSize(),
+            Sort.by(Sort.Direction.DESC, "createdAt")
+        );
+        return postRepository.findAll(sortedByCreatedAtDesc);
     }
 
     public Optional<Post> getPost(Long id) {
