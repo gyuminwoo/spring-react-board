@@ -19,17 +19,20 @@ public class CommentController {
 
     private final CommentService commentService;
 
+//  コメント作成
     @PostMapping
     public ResponseEntity<CommentResponseDto> create(@PathVariable Long postId, @RequestBody CommentRequestDto dto) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         return ResponseEntity.ok(commentService.createComment(postId, dto, username));
     }
 
+//  コメントー一覧取得
     @GetMapping
     public ResponseEntity<List<CommentResponseDto>> getAll(@PathVariable Long postId) {
         return ResponseEntity.ok(commentService.getCommentsByPost(postId));
     }
 
+//  コメント更新
     @PutMapping("/{commentId}")
     public ResponseEntity<?> update(@PathVariable Long postId, @PathVariable Long commentId, @RequestBody CommentRequestDto dto) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -37,6 +40,7 @@ public class CommentController {
         return updated.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+//  コメント削除
     @DeleteMapping("/{commentId}")
     public ResponseEntity<Void> delete(@PathVariable Long postId, @PathVariable Long commentId) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();

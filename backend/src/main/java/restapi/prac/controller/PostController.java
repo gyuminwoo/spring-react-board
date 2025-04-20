@@ -25,6 +25,7 @@ public class PostController {
     @Autowired
     private PostService postService;
 
+//  投稿一覧（ページング対応）
     @GetMapping
     public ResponseEntity<Page<PostResponseDto>> listPost(Pageable pageable){
         Page<Post> posts = postService.getPosts(pageable);
@@ -33,6 +34,7 @@ public class PostController {
         return ResponseEntity.ok(new PageImpl<>(dtos, pageable, posts.getTotalElements()));
     }
 
+//  投稿詳細
     @GetMapping("/{id}")
     public ResponseEntity<PostResponseDto> getPost(@PathVariable Long id) {
         Optional<Post> postOpt = postService.getPost(id);
@@ -40,6 +42,7 @@ public class PostController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+//  投稿作成
     @PostMapping
     public ResponseEntity<PostResponseDto> createPost(@RequestBody PostRequestDto postRequestDto) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -48,6 +51,7 @@ public class PostController {
         return ResponseEntity.ok(created);
     }
 
+//  投稿更新
     @PutMapping("/{id}")
     public ResponseEntity<PostResponseDto> updatePost(@PathVariable Long id, @RequestBody PostRequestDto updateDto) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -58,6 +62,7 @@ public class PostController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+//  投稿削除
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePost(@PathVariable Long id) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

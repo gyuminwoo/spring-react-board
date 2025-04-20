@@ -1,3 +1,4 @@
+//　Post変換（エンティティ　↔　DTO)
 package restapi.prac.dto;
 
 import restapi.prac.dto.request.PostRequestDto;
@@ -7,6 +8,7 @@ import restapi.prac.model.User;
 
 public class PostMapper {
     public static PostResponseDto toDto(Post post) {
+//      Post →　PostResponseDto
         return PostResponseDto.builder()
                 .id(post.getId())
                 .title(post.getTitle())
@@ -18,6 +20,7 @@ public class PostMapper {
                 .build();
     }
 
+//  PostRequestDto　＋　User　→　Postエンティティ（作成用）
     public static Post toEntity(PostRequestDto dto, User user) {
         return Post.builder()
                 .title(dto.getTitle())

@@ -26,6 +26,7 @@ public class JwtTokenProvider {
 
     @PostConstruct
     protected void init() {
+        // 秘密キーを使って署名キーを初期化
         this.key = Keys.hmacShaKeyFor(secretKey.getBytes());
     }
 
@@ -33,6 +34,7 @@ public class JwtTokenProvider {
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + expiration);
 
+        // JWTトークンの作成
         return Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(now)

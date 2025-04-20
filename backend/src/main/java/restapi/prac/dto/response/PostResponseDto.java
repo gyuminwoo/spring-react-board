@@ -1,3 +1,4 @@
+//　投稿のレスポンスDTO
 package restapi.prac.dto.response;
 
 import lombok.Builder;
@@ -13,7 +14,7 @@ public class PostResponseDto {
     private Long id;
     private String title;
     private String content;
-    private String authorName;
+    private String authorName; // 作成者の表示用
     private Long userId;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

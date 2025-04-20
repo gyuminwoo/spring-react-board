@@ -1,3 +1,4 @@
+// コメント投稿・編集のリクエストDTO
 package restapi.prac.dto.request;
 
 import lombok.Getter;

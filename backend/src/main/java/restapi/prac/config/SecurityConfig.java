@@ -28,14 +28,20 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+//              CORS設定（フロントとの通信許可）
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+//              CSRF無効化（JWT使用のため）
                 .csrf(csrf -> csrf.disable())
+//              セッションを使わずにJWTで認証管理
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
+//                      投稿一覧と詳細ページは認証なしでも許可
                         .requestMatchers(HttpMethod.GET, "/api/posts/**").permitAll()
                         .requestMatchers("/api/auth/**", "/api/users/register").permitAll()
+//                      その他は認証必要
                         .anyRequest().authenticated()
                 )
+//              JWTフィルターをSpring　Securityの前に追加
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
@@ -52,6 +58,7 @@ public class SecurityConfig {
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
+//      CORSポリシー設定
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(List.of("http://localhost:3000"));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));

@@ -1,3 +1,4 @@
+//　ユーザー情報を返すDTO
 package restapi.prac.dto.response;
 
 import lombok.Getter;

@@ -30,10 +30,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         if(header != null && header.startsWith("Bearer ")) {
             String token = header.substring(7);
+            // トークンの有効性を検証
             if(jwtTokenProvider.validateToken(token)) {
                 String username = jwtTokenProvider.getUsernameFromToken(token);
                 UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
+                // ユーザー情報をSecurityContextに設定
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities()
                 );

@@ -1,3 +1,4 @@
+// UserエンティティをUserResponseDtoに変換
 package restapi.prac.dto;
 
 import restapi.prac.dto.response.UserResponseDto;

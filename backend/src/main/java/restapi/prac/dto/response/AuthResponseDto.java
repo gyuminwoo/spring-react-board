@@ -1,3 +1,4 @@
+//　認証結果を返すレスポンスDTO
 package restapi.prac.dto.response;
 
 import lombok.AllArgsConstructor;

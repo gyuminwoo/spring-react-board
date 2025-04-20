@@ -25,7 +25,7 @@ public class UserService {
             throw new IllegalArgumentException("이미 사용 중인 아이디입니다.");
         }
 
-//      パスワードを暗号化した後に保存
+//      パスワードを暗号化して保存
         User user = new User();
         user.setUsername(requestDto.getUsername());
         user.setPassword(passwordEncoder.encode(requestDto.getPassword()));

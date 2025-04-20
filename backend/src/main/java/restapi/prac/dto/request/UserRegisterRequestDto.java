@@ -1,3 +1,4 @@
+//　会員登録時のリクエストDTO
 package restapi.prac.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
@@ -8,6 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UserRegisterRequestDto {
+    // フロント側のバリデーションにも対応
     @NotBlank(message = "아이디는 필수입니다.")
     private String username;
 

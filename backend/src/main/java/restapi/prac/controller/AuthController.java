@@ -23,6 +23,7 @@ public class AuthController {
     private final JwtTokenProvider jwtTokenProvider;
     private final UserRepository userRepository;
 
+//  ログイン処理（JWTトークン発行）
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequestDto loginRequest) {
         try {
@@ -32,8 +33,10 @@ public class AuthController {
                 )
         );
 
+//      JWT生成
         String token = jwtTokenProvider.createToken(loginRequest.getUsername());
 
+//      ユーザー情報取得
         User user = userRepository.findByUsername(loginRequest.getUsername())
                 .orElseThrow(() -> new UsernameNotFoundException("해당 유저를 찾을 수 없습니다."));
 
